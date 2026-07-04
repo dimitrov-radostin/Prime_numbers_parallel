@@ -32,7 +32,6 @@ out_csv = out_dir / f"numba_thread_sweep_{run_date}.csv"
 
 
 
-
 # Child runner: runs in a fresh Python process and prints JSON with runtime
 def time_single_run_subprocess(module_name, func_name, N, n_threads, warmup=True, timeout=None):
     """

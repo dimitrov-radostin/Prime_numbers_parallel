@@ -3,6 +3,28 @@ from bitarray import bitarray
 from numba import njit, prange
 import math
 
+
+def numpy_vectorized_inner_loop(N_max):
+    """
+    Same as the boolean serial implementation,
+    but the inner loop is replaced with a strided assignment
+    """
+    if N_max <= 2:
+        return []
+
+    sieve = np.ones(N_max, dtype=np.bool_)
+    sieve[0:2] = False
+
+    N_sqrt = int(np.floor(np.sqrt(N_max)))
+
+    for i in range(2, N_sqrt + 1):
+        if sieve[i] != 0:
+            sieve[i * i :: i] = False
+
+    primes = np.flatnonzero(sieve)
+    return primes
+
+
 @njit(parallel=True)
 def mark_multiples_parallel(sieve, p, N):
     """
@@ -15,22 +37,22 @@ def mark_multiples_parallel(sieve, p, N):
         return
     # number of multiples to mark
     nsteps = (N - start + p - 1) // p
-    for k in prange(nsteps):            # step is 1 (constant) -> OK
+    for k in prange(nsteps):  # step is 1 (constant) -> OK
         j = start + k * p
         sieve[j] = False
-        
-        
-def numba_parallel_inner_loop_bool_sieve(N_max): 
+
+
+def numba_parallel_inner_loop_bool_sieve(N_max):
     """
     Sieve of Eratosthenes using bitarray (1 bit per entry).
     Parallel over the inner loop, i.e. the work per prime with numba
     Returns a list of primes < N_max.
     """
-    
+
     if N_max <= 2:
         return np.empty(0, dtype=np.uint64)
 
-    sieve = np.ones(N_max, dtype=np.bool_)   # Numba-friendly
+    sieve = np.ones(N_max, dtype=np.bool_)  # Numba-friendly
     sieve[0:2] = False
     N_sqrt = int(math.isqrt(N_max))
 
@@ -40,10 +62,10 @@ def numba_parallel_inner_loop_bool_sieve(N_max):
             mark_multiples_parallel(sieve, p, N_max)
 
     return
-    # primes = np.flatnonzero(sieve)         
+    # primes = np.flatnonzero(sieve)
 
     # return primes
 
 
-#primes = numba_parallel_inner_loop_bool_sieve(1_000_000_000)
+# primes = numba_parallel_inner_loop_bool_sieve(1_000_000_000)
 # print(primes)

@@ -7,7 +7,7 @@ import datetime
 import pandas as pd
 from serial_versions import serial_bitarray_sieve
 
-machine_ref_name = "PC_AMD_Ryzen_7_6800U_machine_info"  # fill-in manually after changing setup and after running the  get_machine_info() function
+machine_ref_name = "PC_AMD_Ryzen_7_7735HS"  # fill-in manually after changing setup and after running the  get_machine_info() function
 
 N_stat = 5
 sizes = np.array(

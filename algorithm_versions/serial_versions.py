@@ -50,7 +50,7 @@ def serial_bool_sieve(N_max):
     primes = np.flatnonzero(sieve)         
     return primes
 
-print(serial_bool_sieve(26))
+# print(serial_bool_sieve(26))
 
 def serial_bitarray_sieve(N_max): 
     """
