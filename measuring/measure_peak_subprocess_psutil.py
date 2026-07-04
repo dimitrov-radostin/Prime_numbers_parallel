@@ -1,45 +1,16 @@
-# measure_peak_subprocess.py
+# measuring/measure_peak_subprocess_psutil.py
 # pip install psutil
+
 import json
 import time
 import sys
 import importlib
 import gc
 import psutil
+import threading
 
-def run_and_report(module_name, func_name, N_max):
-    mod = importlib.import_module(module_name)
-    func = getattr(mod, func_name)
 
-    # warmup / reduce noise
-    gc.collect()
-    proc = psutil.Process()
-
-    # sample RSS before run (baseline)
-    baseline = proc.memory_info().rss
-
-    t0 = time.time()
-    result = func(N_max)
-    t1 = time.time()
-
-    # sample RSS after run and get peak if available
-    # psutil does not expose peak RSS cross-platform reliably,
-    # but on Linux you can read /proc/<pid>/status or use psutil.memory_info().rss samples.
-    # Here we return final RSS and runtime; caller can sample if it needs peak timeline.
-    final_rss = proc.memory_info().rss
-
-    out = {
-        "final_rss_bytes": int(final_rss),
-        "baseline_rss_bytes": int(baseline),
-        "rss_bytes": int(final_rss) - int(baseline),
-        "runtime_s": float(t1 - t0)
-    }
-    sys.stdout.write(json.dumps(out))
-
-# measuring/measure_peak_subprocess_psutil.py
-import importlib, sys, time, threading, json, gc, psutil
-
-def sample_and_run(module_name, func_name, N, interval=0.01):
+def run_and_sample_memory(module_name, func_name, N, interval=0.01):
     mod = importlib.import_module(module_name)
     func = getattr(mod, func_name)
     proc = psutil.Process()
@@ -67,6 +38,36 @@ def sample_and_run(module_name, func_name, N, interval=0.01):
 
 if __name__ == "__main__":
     module_name, func_name, N_max = sys.argv[1], sys.argv[2], int(sys.argv[3])
-    sample_and_run(module_name, func_name, N_max)
+    run_and_sample_memory(module_name, func_name, N_max)
 
 
+# def run_and_report(module_name, func_name, N_max):
+#     mod = importlib.import_module(module_name)
+#     func = getattr(mod, func_name)
+
+#     # warmup / reduce noise
+#     gc.collect()
+#     proc = psutil.Process()
+
+#     # sample RSS before run (baseline)
+#     baseline = proc.memory_info().rss
+
+#     t0 = time.time()
+#     result = func(N_max)
+#     t1 = time.time()
+
+#     # sample RSS after run and get peak if available
+#     # psutil does not expose peak RSS cross-platform reliably,
+#     # but on Linux you can read /proc/<pid>/status or use psutil.memory_info().rss samples.
+#     # Here we return final RSS and runtime; caller can sample if it needs peak timeline.
+#     final_rss = proc.memory_info().rss
+
+#     out = {
+#         "final_rss_bytes": int(final_rss),
+#         "baseline_rss_bytes": int(baseline),
+#         "rss_bytes": int(final_rss) - int(baseline),
+#         "runtime_s": float(t1 - t0)
+#     }
+#     sys.stdout.write(json.dumps(out))
+
+# measuring/measure_peak_subprocess_psutil.py

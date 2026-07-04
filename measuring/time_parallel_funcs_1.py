@@ -20,8 +20,8 @@ FUNC_NAME = "numba_parallel_inner_loop_bool_sieve"       # function compiled wit
 # ------------------------------------------------------------------
 
 # Thread sweep and sizes to test
-THREADS_TO_TEST = [1, 2, 4, 6, 8, 10, 12, 14, 16]
-SIZES = [10_000_000, 100_000_000, 500_000_000, 1_000_000_000]
+THREADS_TO_TEST = [1, 2, 4, 6, 8]
+SIZES = [10_000_000, 100_000_000, 1_000_000_000]
 N_stat = 3                                # repetitions per (N,threads)
 
 # CSV output

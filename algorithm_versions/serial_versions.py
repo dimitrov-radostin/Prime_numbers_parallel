@@ -16,7 +16,7 @@ def serial_int_array_sieve(N_max):
     
     N_sqrt = int(np.floor(np.sqrt(N_max)))  
 
-    for i in range(2, N_sqrt):
+    for i in range(2, N_sqrt+1):
         if  sieve[i] != 0:
             for j in range(i**2, N_max, i):
                 sieve[j] = 0
@@ -42,7 +42,7 @@ def serial_bool_sieve(N_max):
 
     N_sqrt = int(np.floor(np.sqrt(N_max)))  
 
-    for i in range(2, N_sqrt):
+    for i in range(2, N_sqrt+1):
         if  sieve[i] != 0:
             for j in range(i**2, N_max, i):
                 sieve[j] = False
@@ -50,7 +50,7 @@ def serial_bool_sieve(N_max):
     primes = np.flatnonzero(sieve)         
     return primes
 
-# print(serial_bool_sieve(109))
+print(serial_bool_sieve(26))
 
 def serial_bitarray_sieve(N_max): 
     """
@@ -66,7 +66,7 @@ def serial_bitarray_sieve(N_max):
     
     N_sqrt = int(np.floor(np.sqrt(N_max)))  
     
-    for i in range(2, N_sqrt):
+    for i in range(2, N_sqrt+1):
         if  sieve[i] != 0:
             for j in range(i**2, N_max, i):
                 sieve[j] = False
@@ -141,7 +141,7 @@ def serial_int_array_sieve_no_return(N_max):
     
     N_sqrt = int(np.floor(np.sqrt(N_max)))  
 
-    for i in range(2, N_sqrt):
+    for i in range(2, N_sqrt+1):
         if  sieve[i] != 0:
             for j in range(i**2, N_max, i):
                 sieve[j] = 0
@@ -165,7 +165,7 @@ def serial_bool_sieve_no_return(N_max):
 
     N_sqrt = int(np.floor(np.sqrt(N_max)))  
 
-    for i in range(2, N_sqrt):
+    for i in range(2, N_sqrt+1):
         if  sieve[i] != 0:
             for j in range(i**2, N_max, i):
                 sieve[j] = False
@@ -186,7 +186,7 @@ def serial_bitarray_sieve_no_return(N_max):
     
     N_sqrt = int(np.floor(np.sqrt(N_max)))  
     
-    for i in range(2, N_sqrt):
+    for i in range(2, N_sqrt+1):
         if  sieve[i] != 0:
             for j in range(i**2, N_max, i):
                 sieve[j] = False
