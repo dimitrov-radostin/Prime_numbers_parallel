@@ -1,10 +1,12 @@
+# ./measuring/plot_exec_time_comparison.py
 """
 Plot execution time vs. input size (log-log) for several sieve variants,
 each with error bars and its own weighted fit to t = c * n * log(log(n)).
 
 Usage:
-    python ./measuring/plot_exec_time_comparison.py ./run_data/numpy_vect_compare_2026-07-04T18-42-26.csv 
+    python -m measuring.plot_exec_time_comparison 
 """
+
 import os
 import numpy as np
 import pandas as pd

@@ -1,6 +1,6 @@
-# measuring/time_meas_for_comparison.py
+# measuring/segmented_serial_times_for_comparison.py
 #
-# run with python -m measuring.time_meas_for_comparison
+# run with python -m measuring.segmented_serial_times_for_comparison
 #
 
 import numpy as np
@@ -11,14 +11,9 @@ import pandas as pd
 from pathlib import Path
 import numba
 
-from algorithm_versions.serial_versions import (
-    serial_int_array_sieve,
-    serial_bitarray_sieve,
-    serial_bool_sieve,
-)
-from algorithm_versions.inner_loop_opt_versions import (
-    numba_parallel_inner_loop_bool_sieve,
-    numpy_vectorized_inner_loop,
+
+from algorithm_versions.segemnted_versions import (
+    serial_segmented    
 )
 
 # versions_for_compare = [serial_int_array_sieve, serial_bitarray_sieve, serial_bool_sieve]
@@ -33,9 +28,10 @@ machine_ref_name = "PC_AMD_Ryzen_7_7735HS"
 
 N_stat = 1
 sizes = np.array(
-    # [10_000, 50_000, 100_000, 500_000, 1_000_000, 5_000_000, 10_000_000, 50_000_000, 100_000_000, 500_000_000, 1_000_000_000]
-    [1000, 1000, 10_000_000_000]
-    # [5_000_000, 10_000_000, 12_000_000, 13_000_000, 14_000_000, 15_000_000, 16_000_000, 17_000_000, 18_000_000, 20_000_000, 22_000_000, 25_000_000]
+    [10_000_000, 100_000_000, 1_000_000_000]
+    ) 
+segment_sizes = sizes = np.array(
+    [10
     ) 
 
 # sizes = np.arange(5_000_000, 25_000_000, 1_000_000)

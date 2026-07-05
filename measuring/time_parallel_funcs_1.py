@@ -2,11 +2,9 @@
 # run with python -m measuring.time_parallel_funcs_1
 ##
 
-import os
-import time
+
 import sys
 import datetime
-import gc
 import json
 from pathlib import Path
 import numpy as np
@@ -15,21 +13,20 @@ import subprocess
 
 # --- Configure these to match your implementation module/function ---
 # The module must be importable from the project root (use python -m or PYTHONPATH=. when running)
-MODULE_NAME = "algorithm_versions.parallel_versions"          # e.g., file sieve_numba_fixed.py
+MODULE_NAME = "algorithm_versions.inner_loop_opt_versions"          # e.g., file sieve_numba_fixed.py
 FUNC_NAME = "numba_parallel_inner_loop_bool_sieve"       # function compiled with numba
 # ------------------------------------------------------------------
 
 # Thread sweep and sizes to test
-THREADS_TO_TEST = [1, 2, 4, 6, 8]
+THREADS_TO_TEST = [1, 2, 3, 4, 5, 6, 7, 8]
 SIZES = [10_000_000, 100_000_000, 1_000_000_000]
-N_stat = 3                                # repetitions per (N,threads)
+N_stat = 3                                # repetitions 
 
 # CSV output
 run_date = datetime.datetime.now().strftime("%Y-%m-%dT%H-%M-%S")
 out_dir = Path.cwd() / "run_data"
 out_dir.mkdir(parents=True, exist_ok=True)
 out_csv = out_dir / f"numba_thread_sweep_{run_date}.csv"
-
 
 
 # Child runner: runs in a fresh Python process and prints JSON with runtime

@@ -1,5 +1,4 @@
 import numpy as np
-from bitarray import bitarray
 from numba import njit, prange
 import math
 
@@ -61,10 +60,9 @@ def numba_parallel_inner_loop_bool_sieve(N_max):
         if sieve[p]:
             mark_multiples_parallel(sieve, p, N_max)
 
-    return
-    # primes = np.flatnonzero(sieve)
+    primes = np.flatnonzero(sieve)
 
-    # return primes
+    return primes
 
 
 # primes = numba_parallel_inner_loop_bool_sieve(1_000_000_000)
