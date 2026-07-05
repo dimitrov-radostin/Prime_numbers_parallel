@@ -9,7 +9,7 @@ import functools
 import datetime
 import pandas as pd
 from pathlib import Path
-import numba
+
 
 from algorithm_versions.inner_loop_opt_versions import (
     numpy_vectorized_inner_loop    
@@ -32,7 +32,8 @@ sizes = np.array(
     [10_000_000, 50_000_000, 100_000_000, 200_000_000]
     ) 
 segment_sizes = np.array(
-    [25_000, 30_000, 35_000, 400_000, 500_000, 600_000]
+    # [25_000, 30_000, 35_000, 400_000, 500_000, 600_000, 10_000_000, 14_000_000, 20_000_000]
+    [200_000, 250_000, 300_000, 350_000, 400_000, 430_000, 450_000, 480_000, 500_000]
     ) 
 
 # sizes = np.arange(5_000_000, 25_000_000, 1_000_000)
@@ -86,7 +87,7 @@ safe_run_date = run_date.replace(":", "-")  # 2026-07-02T19-29-52
 out_csv = (
     Path(__file__).resolve().parent.parent
     / "run_data"
-    / f"serial_segmented_d_sweep_{safe_run_date}.csv"
+    / f"serial_segmented_finner_d_sweep_before_L2_{safe_run_date}.csv"
 )
 
 out_csv.parent.mkdir(parents=True, exist_ok=True)
